@@ -9,7 +9,6 @@ import filtersReducer from './filters/reducer';
 import sortReducer from './sort/reducer';
 import authReducer from "./auth";
 import apiStatusReducer from "./apiStatus";
-//import getProduct from './shelf/reducer'
 
   
 export default combineReducers({

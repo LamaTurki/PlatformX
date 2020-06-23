@@ -1,9 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import 'firebase/firestore';
-import store from './services/store'
-import {createFirestoreInstance} from "redux-firestore";
-
 const firebaseConfig = {
   apiKey: "AIzaSyDa2xuvuxGZvxY_z-cnrLvq9Pcb7NPLfxU",
   authDomain: "x-project-1.firebaseapp.com",
@@ -17,16 +14,10 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.firestore();
-const rrfConfig = {
-  userProfile: 'products',
-  useFirestoreForProfile: true
-};
-
- export const rrfProps = {
-  firebase,
-  config: rrfConfig,
-  dispatch: store.dispatch,
-  createFirestoreInstance //since we are using Firestore
-};
+firebase.auth().onAuthStateChanged(async user => {
+  if (!user) {
+    await firebase.auth().signInAnonymously();
+  }
+});
 
 export default firebase;
