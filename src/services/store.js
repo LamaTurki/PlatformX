@@ -1,24 +1,19 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import rootReducer from './reducers';
 import { getFirebase } from 'react-redux-firebase';
-import { getFirestore } from 'redux-firestore';
 import thunk from 'redux-thunk'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middleware = [
-  thunk.withExtraArgument( getFirestore )
-  // This is where you add other middleware like redux-observable
-];
-const initialState =
-  JSON.parse(window.localStorage.getItem('state')) || {};
+
+const initialState = window && window.__INITIAL_STATE__;
+const middlewares = [
+  thunk.withExtraArgument(getFirebase)];
 
   const store = createStore(
     rootReducer,
     initialState,
-    composeEnhancers(
-              applyMiddleware(...middleware)
-                  )
-             
+    compose(
+      applyMiddleware(...middlewares),
+    )
   );
 
 store.subscribe(() => {
@@ -33,52 +28,3 @@ store.subscribe(() => {
 });
 
 export default store;
-//-------------------------------
-// import { compose, createStore, applyMiddleware } from 'redux';
-// import rootReducer from './reducers';
-// import {  getFirestore } from 'redux-firestore'
-// import thunk from 'redux-thunk';
-// //import { getFirebase } from 'react-redux-firebase';
-// //import  firebase from "../components/Firestore";
-// //test
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// // const middleware = [thunk.withExtraArgument({getFirestore})];
-
-// // const initialState =
-// //   JSON.parse(window.localStorage.getItem('state')) || {};
-
-// const store = createStore(
-//   rootReducer,
-//   //initialState,
-//   composeEnhancers(
-//             applyMiddleware(thunk.withExtraArgument({getFirestore}))
-//                 )
-           
-// );
-
-// // export default initialState => {
-// //   initialState =
-// //     JSON.parse(window.localStorage.getItem('state')) || initialState;
-//      //const middleware = [thunk.withExtraArgument({getFirestore})];
-
-//   // const store = createStore(
-//   //   rootReducer,
-//   //   initialState,
-//   //   compose(
-//   //             applyMiddleware(thunk.withExtraArgument({getFirestore}))
-//   //                 )
-//   //               /* window.__REDUX_DEVTOOLS_EXTENSION__ &&
-//   //       window.__REDUX_DEVTOOLS_EXTENSION__() */
-//   // );
-
-
-//   // store.subscribe(() => {
-//   //   const state = store.getState();
-//   //   const persist = {
-//   //     cart: state.cart,
-//   //     total: state.total
-//   //   };
-
-//    // window.localStorage.setItem('state', JSON.stringify(persist));});
-
-//     export default store;

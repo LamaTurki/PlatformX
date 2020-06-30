@@ -7,7 +7,7 @@ import { addProductToSaved } from '../../services/saved/actions';
 import { addProductToCart } from '../../services/cart/actions';
 import Spinner from '../Spinner';
 import { useFirestoreConnect} from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
+import { useSelector , connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { formatPrice } from '../../services/util';
 import Grid from '@material-ui/core/Grid';
@@ -25,7 +25,7 @@ import  theme  from "./theme";
 
 
 
-export default function productPage({match :{params :{id}}}){
+ function productPage({match :{params :{id}}}){
 
     useFirestoreConnect([
         { collection: `products`, doc: id, storeAs: 'product' }
@@ -113,5 +113,11 @@ export default function productPage({match :{params :{id}}}){
    
 }
 productPage.propType = {
-    firestore: PropTypes.object.isRequired
+    firestore: PropTypes.object.isRequired,
+    addProductToSaved: PropTypes.func.isRequired,
+   addProductToCart: PropTypes.func.isRequired
 }
+export default connect(
+    null,
+    { addProductToSaved, addProductToCart }
+  )(productPage);
