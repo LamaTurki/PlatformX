@@ -22,7 +22,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import FavoriteBorder  from '@material-ui/icons/FavoriteBorder';
 import  theme  from "./theme";
 
- function productPage({match :{params :{id}}}){
+ function productPage({match :{params :{id}}, addProductToSaved, addProductToCart}){
 
     useFirestoreConnect([
         { collection: `products`, doc: id, storeAs: 'product' }
@@ -32,7 +32,7 @@ import  theme  from "./theme";
     console.log(product)
 
     if (!product) return <Spinner/>;
-    
+
     useFirestore();
     const auth = useSelector(state => state.firebase.auth);
  
