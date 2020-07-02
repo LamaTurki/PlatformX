@@ -6,7 +6,7 @@ import FloatSavedItems from '../FloatSavedItems';
 import { addProductToSaved } from '../../services/saved/actions';
 import { addProductToCart } from '../../services/cart/actions';
 import Spinner from '../Spinner';
-import { useFirestoreConnect, useFirestore} from 'react-redux-firebase';
+import {useFirestore} from 'react-redux-firebase';
 import { useSelector , connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { formatPrice } from '../../services/util';
@@ -24,16 +24,12 @@ import  theme  from "./theme";
 
  function productPage({match :{params :{id}}, addProductToSaved, addProductToCart}){
 
-    useFirestoreConnect([
-        { collection: `products`, doc: id, storeAs: 'product' }
-    ]);
-
+    useFirestore();
     const product = useSelector(({ firestore: { ordered } }) => ordered.products && ordered.products[id]);
     console.log(product)
 
     if (!product) return <Spinner/>;
 
-    useFirestore();
     const auth = useSelector(state => state.firebase.auth);
  
     let formattedPrice = formatPrice(product.price, product.currencyId);
@@ -114,7 +110,6 @@ import  theme  from "./theme";
    
 }
 productPage.propTypes = {
-    product: PropTypes.object.isRequired,
     addProductToSaved: PropTypes.func.isRequired,
    addProductToCart: PropTypes.func.isRequired
 }
