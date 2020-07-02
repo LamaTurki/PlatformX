@@ -6,7 +6,7 @@ import FloatSavedItems from '../FloatSavedItems';
 import { addProductToSaved } from '../../services/saved/actions';
 import { addProductToCart } from '../../services/cart/actions';
 import Spinner from '../Spinner';
-import { useFirestoreConnect} from 'react-redux-firebase';
+import { useFirestoreConnect, useFirestore} from 'react-redux-firebase';
 import { useSelector , connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { formatPrice } from '../../services/util';
@@ -22,9 +22,6 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import FavoriteBorder  from '@material-ui/icons/FavoriteBorder';
 import  theme  from "./theme";
 
-
-
-
  function productPage({match :{params :{id}}}){
 
     useFirestoreConnect([
@@ -35,6 +32,10 @@ import  theme  from "./theme";
     console.log(product)
 
     if (!product) return <Spinner/>;
+    
+    useFirestore();
+    const auth = useSelector(state => state.firebase.auth);
+ 
     let formattedPrice = formatPrice(product.price, product.currencyId);
 
     return (
@@ -99,7 +100,7 @@ import  theme  from "./theme";
                  </FormControl>
 
                  <Button size="large" variant="text" fullWidth={true} endIcon={ <AddShoppingCartIcon />} onClick={() => addProductToCart(product)} data-sku={product.sku}>Add to Cart</Button>
-                 <Button size="large" variant="text" fullWidth={true} endIcon={<FavoriteBorder/>}  onClick={() => addProductToSaved(product)} data-sku={product.sku}>Add to favorite</Button>
+                 <Button size="large" variant="text" fullWidth={true} endIcon={<FavoriteBorder/>}  onClick={() => addProductToSaved(auth.uid,product)} data-sku={product.sku}>Add to favorite</Button>
                 
                  </Grid>
                  </Grid>
@@ -112,8 +113,8 @@ import  theme  from "./theme";
         );
    
 }
-productPage.propType = {
-    firestore: PropTypes.object.isRequired,
+productPage.propTypes = {
+    product: PropTypes.object.isRequired,
     addProductToSaved: PropTypes.func.isRequired,
    addProductToCart: PropTypes.func.isRequired
 }
