@@ -20,15 +20,65 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import FavoriteBorder  from '@material-ui/icons/FavoriteBorder';
+import Skeleton from '@material-ui/lab/Skeleton';
 import  theme  from "./theme";
 
  function productPage({match :{params :{id}}, addProductToSaved, addProductToCart}){
 
     useFirestore();
+    //const product = false;
     const product = useSelector(({ firestore: { ordered } }) => ordered.products && ordered.products[id]);
     console.log(product)
 
-    if (!product) return <Spinner/>;
+    if (!product) return (
+        <React.Fragment> 
+        <div className="App">
+        <Navbar/>
+        <main>
+        <ThemeProvider theme={theme}>
+         <Grid container spacing={10}>
+            <Grid item xs={6}>
+            <Skeleton animation="wave" variant="rect" width="100%">
+            <div style={{ paddingTop: '100%' }} />
+            </Skeleton>
+             </Grid>
+            <Grid item xs={4}  container direction="column" spacing={5}>
+            <Skeleton animation="wave" width="100%">
+                <Typography gutterBottom={true} variant="h2">.</Typography>
+            </Skeleton>
+            <Skeleton animation="wave" width="100%">
+                <Typography  gutterBottom={true} variant="body1">.</Typography>
+            </Skeleton>
+            <Skeleton animation="wave" width="100%">
+                <Typography  gutterBottom={true} variant="h6">.</Typography>
+            </Skeleton>
+            <Skeleton animation="wave" width="100%">
+                <Typography  gutterBottom={true} variant="h6">.</Typography>
+            </Skeleton>    
+            <Skeleton animation="wave" width="100%">
+                <Typography  gutterBottom={true} variant = "h4" >.</Typography>
+            </Skeleton>
+            <Skeleton animation="wave" width="100%">   
+             <FormControl margin="normal">.</FormControl>
+            </Skeleton>
+            <Skeleton animation="wave"  width="100%">  
+             <FormControl margin="normal" >.</FormControl>
+             </Skeleton>  
+             <Skeleton animation="wave" width="100%">
+             <Button size="large" variant="text" fullWidth={true}>.</Button>
+            </Skeleton>
+            <Skeleton animation="wave" width="100%">
+             <Button size="large" variant="text" fullWidth={true}>.</Button>
+            </Skeleton>
+             </Grid>
+             </Grid>
+             </ThemeProvider>
+             </main>
+             <FloatSavedItems />
+             <FloatCart />
+            </div>
+        </React.Fragment>
+    );
 
     const auth = useSelector(state => state.firebase.auth);
  
