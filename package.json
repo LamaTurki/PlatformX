@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "concurrently": "^4.0.1",
