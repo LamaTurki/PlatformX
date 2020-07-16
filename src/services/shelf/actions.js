@@ -78,12 +78,7 @@ export const fetchProducts = (filters, search, sortBy, callback,productID) =>  {
         let {products} = doc.data()
         dispatch({ type: FETCH_PRODUCTS , products }) 
        
-      
-     
-      // .then(querySnapshot => {
-      //   const productsRef  = querySnapshot.docs.map(doc => doc.data());
-      //   console.log(productsRef);
-     
+    
       if (!!filters && filters.length > 0) {
         products = products.filter(p =>
           filters.find(f => p.availableSizes.find(size => size === f))
@@ -106,10 +101,10 @@ export const fetchProducts = (filters, search, sortBy, callback,productID) =>  {
        }
 
       
-      // return dispatch({
-      //   type: FETCH_PRODUCTS,
-      //   payload: products
-      // });
+      return dispatch({
+        type: FETCH_PRODUCTS,
+        payload: products
+      });
     })
     .catch(err => {
       console.log('Could not fetch products. Try again later.');

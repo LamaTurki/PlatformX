@@ -4,7 +4,6 @@ import { useFirestoreConnect} from 'react-redux-firebase';
 import Product from './Product';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Box from '@material-ui/core/Box';
-import Spinner from '../../Spinner';
 
 export default function ProductList() {
   useFirestoreConnect([

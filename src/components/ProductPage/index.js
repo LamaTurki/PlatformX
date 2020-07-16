@@ -5,7 +5,6 @@ import FloatCart from '../FloatCart';
 import FloatSavedItems from '../FloatSavedItems';
 import { addProductToSaved } from '../../services/saved/actions';
 import { addProductToCart } from '../../services/cart/actions';
-import Spinner from '../Spinner';
 import {useFirestore} from 'react-redux-firebase';
 import { useSelector , connect} from 'react-redux';
 import PropTypes from 'prop-types';
